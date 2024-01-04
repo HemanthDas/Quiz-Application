@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, Router } from "@tanstack/react-router";
 import routeTree from "./routes.tsx";
 import "./App.css";
-
+import DailogBoxProvider from "./context/dailogbox";
 const route = new Router({ routeTree });
 declare module "@tanstack/react-router" {
   interface Register {
@@ -12,6 +12,8 @@ declare module "@tanstack/react-router" {
 }
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={route} />
+    <DailogBoxProvider>
+      <RouterProvider router={route} />
+    </DailogBoxProvider>
   </React.StrictMode>
 );

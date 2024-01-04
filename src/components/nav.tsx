@@ -2,9 +2,9 @@ import { Link } from "@tanstack/react-router";
 const Nav = () => {
   return (
     <nav>
-      <div></div>
+      <Link to={"/testme/"}>TestMe</Link>
       <ul>
-        <Link to={"/testme/subjects"}>subjects</Link>
+        <Link to={"/testme/subject"}>subjects</Link>
         <Link to={"/testme/login"}>login</Link>
       </ul>
     </nav>

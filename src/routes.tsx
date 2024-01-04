@@ -1,20 +1,10 @@
-import { Outlet, RootRoute, Route } from "@tanstack/react-router";
-
-import Footer from "./components/footer.tsx";
-// import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { RootRoute, Route } from "@tanstack/react-router";
+import App from "./App.tsx";
 import Home from "./pages/home.tsx";
-import Nav from "./components/nav.tsx";
+import Login from "./pages/login.tsx";
+
 const rootRoute = new RootRoute({
-  component: () => (
-    <>
-      <Nav />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
-      {/* <TanStackRouterDevtools /> */}
-    </>
-  ),
+  component: App,
 });
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -27,9 +17,9 @@ const subIndexRoute = new Route({
   component: () => <>Not App </>,
 });
 const loginRoute = new Route({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => indexRoute,
   path: "/testme/login",
-  component: () => <>Login </>,
+  component: Login,
 });
 
 const routeTree = rootRoute.addChildren([
