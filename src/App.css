@@ -37,7 +37,8 @@ a {
       display: flex;
       justify-content: space-around;
       flex: 2;
-      > a {
+      > a,
+      button {
         font-size: 1.3rem;
         padding: 1rem;
       }
@@ -64,9 +65,23 @@ a {
   justify-content: center;
   align-items: center;
   .top {
+    position: relative;
     width: 40vmax;
     height: 60vmin;
     background-color: var(--cl3);
     z-index: 12;
+    .cross {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 1.4rem;
+      background-color: pink;
+    }
   }
+}
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
