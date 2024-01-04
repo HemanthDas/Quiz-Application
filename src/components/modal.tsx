@@ -1,15 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
+import { DialogBoxContext } from "../context/dailogbox.tsx";
+
 import Login from "../pages/login.tsx";
 
 function ModelType({ type }: { readonly type: number }) {
   if (type === 1) return <Login />;
   if (type === 2) return <div className="top">Modal 2</div>;
   if (type === 3) return <div className="top">Modal 3</div>;
-  return (
-    <div className="top">
-      <Login />
-    </div>
-  );
 }
 
 const MemoizedModelType = React.memo(ModelType);
@@ -23,6 +20,7 @@ const Modal = ({
   type: number;
   state: boolean;
 }) => {
+  const { setState } = useContext(DialogBoxContext);
   const modalContent = useMemo(() => {
     return state ? <MemoizedModelType type={type} /> : null;
   }, [state, type]);
@@ -30,7 +28,21 @@ const Modal = ({
   return (
     <>
       {children}
-      {modalContent && <div className="pop">{modalContent}</div>}
+      {modalContent && (
+        <div className="pop">
+          <div className="top">
+            <button
+              className="cross"
+              onClick={() => {
+                setState(false);
+              }}
+            >
+              X
+            </button>
+            {modalContent}
+          </div>
+        </div>
+      )}
     </>
   );
 };
