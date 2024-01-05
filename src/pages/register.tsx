@@ -1,35 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { DialogBoxContext } from "../context/dailogbox";
-import { useCookies } from "react-cookie";
-const Login = () => {
-  const { setType, setState } = useContext(DialogBoxContext);
+const Register = () => {
+  const { setType } = useContext(DialogBoxContext);
+  const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [cookies, setCookie] = useCookies(["user"]);
-  useEffect(() => {
-    if (cookies.user) {
-      alert("Already logged in");
-      setState(false);
-    }
-  });
   const handleLogin = () => {
-    if (!username || !password) {
+    if (!username || !password || !email) {
       alert("Please enter username and password");
       return;
     }
-    fetch("http://localhost:3000/auth/login", {
+    alert(`username: ${username}, password: ${password}`);
+    fetch("http://localhost:3000/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, username, password }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
           alert(data.message);
-          setCookie("user", data.token, { path: "/" }, { maxAge: 3600 });
-          setState(false);
+          setType(1);
         } else {
-          alert(data.message);
+          alert("Register failed");
         }
       })
       .catch((err) => {
@@ -38,7 +31,15 @@ const Login = () => {
   };
   return (
     <div id="login">
-      <h1>Login</h1>
+      <h1>Register</h1>
+
+      <input
+        type="email"
+        placeholder="Email"
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
+      />
       <input
         type="text"
         placeholder="Username"
@@ -46,6 +47,7 @@ const Login = () => {
           setUsername(e.target.value);
         }}
       />
+
       <input
         type="password"
         placeholder="Password"
@@ -56,14 +58,14 @@ const Login = () => {
       <div>
         <button
           onClick={() => {
-            setType(2);
+            setType(1);
           }}
         >
-          register
+          login
         </button>
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleLogin}>Register</button>
       </div>
     </div>
   );
 };
-export default Login;
+export default Register;
