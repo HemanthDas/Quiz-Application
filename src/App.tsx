@@ -8,7 +8,7 @@ import { useContext } from "react";
 
 // import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 function App() {
-  const { state, type }= useContext(DialogBoxContext);
+  const { state, type } = useContext(DialogBoxContext);
   return (
     <Modal type={type} state={state}>
       <Nav />

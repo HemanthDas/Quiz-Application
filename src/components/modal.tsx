@@ -2,10 +2,11 @@ import React, { useMemo, useContext } from "react";
 import { DialogBoxContext } from "../context/dailogbox.tsx";
 
 import Login from "../pages/login.tsx";
+import Register from "../pages/register.tsx";
 
 function ModelType({ type }: { readonly type: number }) {
   if (type === 1) return <Login />;
-  if (type === 2) return <div className="top">Modal 2</div>;
+  if (type === 2) return <Register />;
   if (type === 3) return <div className="top">Modal 3</div>;
 }
 
