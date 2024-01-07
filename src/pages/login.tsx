@@ -1,14 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { DialogBoxContext } from "../context/dailogbox";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 const Login = () => {
   const { setType, setState } = useContext(DialogBoxContext);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [cookies, setCookie] = useCookies(["user"]);
   useEffect(() => {
-    if (cookies.user) {
-      alert("Already logged in");
+    if (document.cookie) {
       setState(false);
     }
   });
@@ -26,7 +24,7 @@ const Login = () => {
       .then((data) => {
         if (data.status === "success") {
           alert(data.message);
-          setCookie("user", data.token, { path: "/" }, { maxAge: 3600 });
+          Cookies.set("user", data.token);
           setState(false);
         } else {
           alert(data.message);

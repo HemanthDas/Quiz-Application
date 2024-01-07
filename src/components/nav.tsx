@@ -1,16 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { useContext } from "react";
 import { DialogBoxContext } from "../context/dailogbox";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 const Nav = () => {
-  const [cookies, removeCookie] = useCookies(["user"]);
   const { setState, setType } = useContext(DialogBoxContext);
   return (
     <nav>
       <Link to={"/testme/"}>TestMe</Link>
       <ul>
         <Link to={"/testme/subject"}>subjects</Link>
-        {cookies.user !== "token" ? (
+        <Link to={"/testme/topic"}>topics</Link>
+        {!Cookies.get("user") ? (
           <button
             onClick={() => {
               setState(true);
@@ -23,7 +23,8 @@ const Nav = () => {
         ) : (
           <button
             onClick={() => {
-              removeCookie("user", { path: "/" });
+              Cookies.remove("user");
+              window.location.reload();
             }}
           >
             logout
