@@ -14,11 +14,7 @@ const Subject = () => {
       <article>
         {subjects.map((subject) => {
           return (
-            <Link
-              key={subject.id}
-              className="sub-names"
-              to={`/testme/subject/` + subject.name}
-            >
+            <Link key={subject.id} className="sub-names" to={subject.name}>
               <h1>{subject.name}</h1>
             </Link>
           );

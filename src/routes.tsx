@@ -9,17 +9,17 @@ const rootRoute = new RootRoute({
 });
 const indexRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "/testme",
+  path: "/",
   component: Home,
 });
 const subjectRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "testme/subject",
+  path: "/subject",
   component: Subject,
 });
 const topicRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: "testme/topic",
+  path: "/topic",
   component: Topic,
 });
 const subjectIDRoute = new Route({
@@ -27,8 +27,13 @@ const subjectIDRoute = new Route({
   path: "$id",
   component: PreTest,
 });
-
+const NotFoundRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "*",
+  component: () => <div>404</div>,
+});
 const routeTree = rootRoute.addChildren([
+  NotFoundRoute,  
   indexRoute.addChildren([
     subjectRoute.addChildren([subjectIDRoute]),
     topicRoute,
