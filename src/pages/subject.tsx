@@ -24,4 +24,5 @@ const Subject = () => {
     </section>
   );
 };
+
 export default Subject;
