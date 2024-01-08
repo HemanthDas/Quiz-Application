@@ -31,11 +31,11 @@ const Home = () => {
           <div className="md2-btns">
             <button>
               {" "}
-              <Link to={"/testme/subject"}>Subjects</Link>
+              <Link to={"subject"}>Subjects</Link>
             </button>
             <button>
               {" "}
-              <Link to={"/testme/topic"}>Topics</Link>
+              <Link to={"topic"}>Topics</Link>
             </button>
           </div>
         </div>

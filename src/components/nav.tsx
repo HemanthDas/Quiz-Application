@@ -6,10 +6,10 @@ const Nav = () => {
   const { setState, setType } = useContext(DialogBoxContext);
   return (
     <nav>
-      <Link to={"/testme/"}>TestMe</Link>
+      <Link to={"/"}>TestMe</Link>
       <ul>
-        <Link to={"/testme/subject"}>subjects</Link>
-        <Link to={"/testme/topic"}>topics</Link>
+        <Link to={"subject"}>subjects</Link>
+        <Link to={"topic"}>topics</Link>
         {!Cookies.get("user") ? (
           <button
             onClick={() => {
