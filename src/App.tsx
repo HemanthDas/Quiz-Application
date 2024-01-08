@@ -6,7 +6,7 @@ import { Outlet } from "@tanstack/react-router";
 
 import { useContext } from "react";
 
-// import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 function App() {
   const { state, type } = useContext(DialogBoxContext);
   return (
@@ -16,7 +16,7 @@ function App() {
         <Outlet />
       </main>
       <Footer />
-      {/* <TanStackRouterDevtools /> */}
+      <TanStackRouterDevtools />
     </Modal>
   );
 }

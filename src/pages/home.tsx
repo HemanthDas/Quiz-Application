@@ -29,8 +29,14 @@ const Home = () => {
             best?
           </p>
           <div className="md2-btns">
-            <button>Subjetcs</button>
-            <button>Topics</button>
+            <button>
+              {" "}
+              <Link to={"/testme/subject"}>Subjects</Link>
+            </button>
+            <button>
+              {" "}
+              <Link to={"/testme/topic"}>Topics</Link>
+            </button>
           </div>
         </div>
       </article>
