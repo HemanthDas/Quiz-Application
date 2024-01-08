@@ -4,7 +4,8 @@ import Home from "./pages/home.tsx";
 import Subject from "./pages/subject.tsx";
 import Topic from "./pages/topic.tsx";
 import PreTest from "./pages/pretest.tsx";
-const rootRoute = new RootRoute({
+import { NotFoundRoute } from "./pages/notfound.tsx";
+export const rootRoute = new RootRoute({
   component: App,
 });
 const indexRoute = new Route({
@@ -27,13 +28,9 @@ const subjectIDRoute = new Route({
   path: "$id",
   component: PreTest,
 });
-const NotFoundRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "*",
-  component: () => <div>404</div>,
-});
+
 const routeTree = rootRoute.addChildren([
-  NotFoundRoute,  
+  NotFoundRoute,
   indexRoute.addChildren([
     subjectRoute.addChildren([subjectIDRoute]),
     topicRoute,
