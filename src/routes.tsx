@@ -3,7 +3,7 @@ import App from "./App.tsx";
 import Home from "./pages/home.tsx";
 import Subject from "./pages/subject.tsx";
 import Topic from "./pages/topic.tsx";
-import PreTest from "./pages/pretest.tsx";
+import Exam from "./pages/exam.tsx";
 import { NotFoundRoute } from "./pages/notfound.tsx";
 export const rootRoute = new RootRoute({
   component: App,
@@ -23,18 +23,15 @@ const topicRoute = new Route({
   path: "/topic",
   component: Topic,
 });
-const subjectIDRoute = new Route({
-  getParentRoute: () => subjectRoute,
-  path: "$id",
-  component: PreTest,
+const examRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/exam/$id",
+  component: Exam,
 });
 
 const routeTree = rootRoute.addChildren([
   NotFoundRoute,
-  indexRoute.addChildren([
-    subjectRoute.addChildren([subjectIDRoute]),
-    topicRoute,
-  ]),
+  indexRoute.addChildren([subjectRoute, topicRoute, examRoute]),
 ]);
 
 export default routeTree;

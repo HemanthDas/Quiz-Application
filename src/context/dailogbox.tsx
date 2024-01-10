@@ -24,15 +24,17 @@ const DialogBoxProvider: React.FC<{ children: React.ReactNode }> = ({
   const setType = useCallback((type: number) => {
     setDailogState((prevType) => ({ ...prevType, type }));
   }, []);
+  const value = React.useMemo(
+    () => ({
+      state: dailogState.state,
+      type: dailogState.type,
+      setState,
+      setType,
+    }),
+    [dailogState, setState, setType]
+  );
   return (
-    <DialogBoxContext.Provider
-      value={{
-        state: dailogState.state,
-        type: dailogState.type,
-        setState,
-        setType,
-      }}
-    >
+    <DialogBoxContext.Provider value={value}>
       {children}
     </DialogBoxContext.Provider>
   );
