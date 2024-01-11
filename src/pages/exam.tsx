@@ -1,39 +1,61 @@
-import { useParams } from "@tanstack/react-router";
+import { useParams, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useContext } from "react";
 import { NavbarContext } from "../context/navbarcontext";
+
 const Exam = () => {
   const route = useParams({ from: undefined, strict: true });
-  const { toggle } = useContext(NavbarContext);
+  const navigate = useNavigate();
+  const { hide, nohide } = useContext(NavbarContext);
   const [isFullScreen, setisFullScreen] = useState(false);
+
   useEffect(() => {
-    document.body
-      .requestFullscreen()
-      .then(() => {
+    const enableFullscreen = async () => {
+      try {
+        await document.getElementById("exam")?.requestFullscreen();
         setisFullScreen(true);
-      })
-      .catch(() => {
-        setisFullScreen(false);
-      });
-    document.addEventListener("fullscreenchange", () => {
-      if (document.fullscreenElement) {
-        setisFullScreen(true);
-      } else {
+      } catch (error) {
         setisFullScreen(false);
       }
-    });
-    window.onbeforeunload = () => {
-      return "Are you sure you want to leave?";
     };
-    toggle();
 
-    return () => {
-      toggle();
+    enableFullscreen();
+
+    const fullscreenChangeHandler = () => {
+      if (document.fullscreenElement) {
+        nohide();
+        setisFullScreen(true);
+      } else {
+        hide();
+        const confirmationMessage =
+          "Are you sure you want to leave fullscreen mode?";
+        window.addEventListener("beforeunload", (event) => {
+          event.returnValue = confirmationMessage;
+        });
+        if (window.confirm(confirmationMessage)) {
+          navigate({ to: "/subject", replace: true });
+          setisFullScreen(false);
+        } else {
+          enableFullscreen();
+        }
+      }
     };
-  }, []);
+
+    const reloadHandler = (e: Event) => {
+      e.preventDefault();
+      alert("reload");
+    };
+
+    window.addEventListener("beforeunload", reloadHandler);
+    document.addEventListener("fullscreenchange", fullscreenChangeHandler);
+    return () => {
+      document.removeEventListener("fullscreenchange", fullscreenChangeHandler);
+      window.removeEventListener("beforeunload", reloadHandler);
+    };
+  }, [hide, navigate, nohide, route.id]);
 
   return (
-    <div>
-      {isFullScreen ? "you are in full screen" : "bastard"}
+    <div id="exam">
+      {isFullScreen ? "you are in full screen" : "you are not in full screen"}
       {route.id}
     </div>
   );

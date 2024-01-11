@@ -1,9 +1,6 @@
-import { RootRoute, Route } from "@tanstack/react-router";
+import { RootRoute, Route, lazyRouteComponent } from "@tanstack/react-router";
 import App from "./App.tsx";
 import Home from "./pages/home.tsx";
-import Subject from "./pages/subject.tsx";
-import Topic from "./pages/topic.tsx";
-import Exam from "./pages/exam.tsx";
 import { NotFoundRoute } from "./pages/notfound.tsx";
 export const rootRoute = new RootRoute({
   component: App,
@@ -16,17 +13,17 @@ const indexRoute = new Route({
 const subjectRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/subject",
-  component: Subject,
+  component: lazyRouteComponent(() => import("./pages/subject.tsx")),
 });
 const topicRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/topic",
-  component: Topic,
+  component: lazyRouteComponent(() => import("./pages/topic.tsx")),
 });
 const examRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/exam/$id",
-  component: Exam,
+  component: lazyRouteComponent(() => import("./pages/exam.tsx")),
 });
 
 const routeTree = rootRoute.addChildren([

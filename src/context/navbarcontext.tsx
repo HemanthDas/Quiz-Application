@@ -2,21 +2,26 @@ import React, { createContext } from "react";
 import Nav from "../components/nav";
 interface NavbarContextProps {
   show: boolean;
-  toggle: () => void;
+  nohide: () => void;
+  hide: () => void;
 }
 export const NavbarContext = createContext({
   show: false,
-  toggle: () => {},
+  nohide: () => {},
+  hide: () => {},
 } as NavbarContextProps);
 const NavbarProvider = ({ children }: { children: React.ReactNode }) => {
   const [show, setShow] = React.useState(false);
 
-  const toggle = React.useCallback(() => {
-    setShow(!show);
-  }, [show]);
+  const nohide = React.useCallback(() => {
+    setShow(true);
+  }, []);
+  const hide = React.useCallback(() => {
+    setShow(false);
+  }, []);
   const value = React.useMemo(() => {
-    return { show, toggle };
-  }, [show, toggle]);
+    return { show, nohide, hide };
+  }, [show, nohide, hide]);
   return (
     <NavbarContext.Provider value={value}>
       {!show && <Nav />}
