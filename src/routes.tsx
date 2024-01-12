@@ -25,10 +25,18 @@ const examRoute = new Route({
   path: "/exam/$id",
   component: lazyRouteComponent(() => import("./pages/exam.tsx")),
 });
-
+const ResultRoute = new Route({
+  getParentRoute: () => examRoute,
+  path: "/result",
+  component: lazyRouteComponent(() => import("./pages/result.tsx")),
+});
 const routeTree = rootRoute.addChildren([
   NotFoundRoute,
-  indexRoute.addChildren([subjectRoute, topicRoute, examRoute]),
+  indexRoute.addChildren([
+    subjectRoute,
+    topicRoute,
+    examRoute.addChildren([ResultRoute]),
+  ]),
 ]);
 
 export default routeTree;
