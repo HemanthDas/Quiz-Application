@@ -25,21 +25,19 @@ const Exam = () => {
         nohide();
         setIsFullScreen(true);
       } else {
-        hide();
         setIsFullScreen(false);
         exitHandler({ status: false });
       }
     };
     const exitHandler = ({ status }: { status: boolean }) => {
+      console.log(status);
       if (status) {
-        const confirmationMessage =
-          "Sorry, your exam have been submitted due to exiting full screen mode.";
+        const confirmationMessage = "Sorry, your exam have been submitted.";
         alert(confirmationMessage);
         setIsFullScreen(false);
         navigate({ to: "/subject", replace: true });
       } else {
-        setIsFullScreen(true);
-        navigate({ to: "/result", replace: true });
+        alert("You have exited from full screen don't try to change window.");
       }
     };
     window.addEventListener("beforeunload", (event) => {
@@ -55,20 +53,18 @@ const Exam = () => {
   return (
     <div id="exam">
       {isFullScreen ? (
-        <>
-          you are in full screen
-          <button
-            onClick={() => {
-              navigate({ to: "/exam/$id/result", replace: true });
-            }}
-          >
-            Done
-          </button>
-        </>
+        <>you are in full screen</>
       ) : (
         "you are not in full screen"
       )}
       {route.id}
+      <button
+        onClick={() => {
+          navigate({ to: "/exam/$id/result", replace: true });
+        }}
+      >
+        Done
+      </button>
       <Outlet />
     </div>
   );
