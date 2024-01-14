@@ -11,7 +11,8 @@ const Login = () => {
       setState(false);
     }
   });
-  const handleLogin = () => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!username || !password) {
       alert("Please enter username and password");
       return;
@@ -24,6 +25,7 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
+          console.log(data);
           alert(data.message);
           createUser(data.token);
           setState(false);
