@@ -5,21 +5,21 @@ import Footer from "./components/footer";
 import { Outlet } from "@tanstack/react-router";
 
 import { useContext } from "react";
-
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import AuthProvider from "./context/authcontext";
 
 function App() {
   const { state, type } = useContext(DialogBoxContext);
   return (
-    <Modal type={type} state={state}>
-      <NavbarProvider>
-        <main>
-          <Outlet />
-        </main>
-        <Footer />
-        <TanStackRouterDevtools />
-      </NavbarProvider>
-    </Modal>
+    <AuthProvider>
+      <Modal type={type} state={state}>
+        <NavbarProvider>
+          <main>
+            <Outlet />
+          </main>
+          <Footer />
+        </NavbarProvider>
+      </Modal>
+    </AuthProvider>
   );
 }
 

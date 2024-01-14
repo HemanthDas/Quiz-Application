@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Outlet } from "@tanstack/react-router";
+import { useParams, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useContext } from "react";
 import { NavbarContext } from "../context/navbarcontext";
 
@@ -7,7 +7,6 @@ const Exam = () => {
   const navigate = useNavigate();
   const { hide, nohide } = useContext(NavbarContext);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  // const [isSubmitted, setIsSubmitted] = useState(false);
   useEffect(() => {
     const enableFullscreen = async () => {
       try {
@@ -26,23 +25,17 @@ const Exam = () => {
         setIsFullScreen(true);
       } else {
         setIsFullScreen(false);
-        exitHandler({ status: false });
+        exitHandler();
       }
     };
-    const exitHandler = ({ status }: { status: boolean }) => {
-      console.log(status);
-      if (status) {
-        const confirmationMessage = "Sorry, your exam have been submitted.";
-        alert(confirmationMessage);
-        setIsFullScreen(false);
-        navigate({ to: "/subject", replace: true });
-      } else {
-        alert("You have exited from full screen don't try to change window.");
-      }
+    const exitHandler = () => {
+      hide();
+      alert("You have exited from full Exam is going to be submitted");
+      navigate({ to: "/exam/$id/result", replace: true });
     };
     window.addEventListener("beforeunload", (event) => {
       event.preventDefault();
-      exitHandler({ status: true });
+      exitHandler();
     });
     document.addEventListener("fullscreenchange", fullscreenChangeHandler);
     return () => {
@@ -60,12 +53,12 @@ const Exam = () => {
       {route.id}
       <button
         onClick={() => {
+          hide();
           navigate({ to: "/exam/$id/result", replace: true });
         }}
       >
         Done
       </button>
-      <Outlet />
     </div>
   );
 };

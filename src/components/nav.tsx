@@ -1,9 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useContext } from "react";
 import { DialogBoxContext } from "../context/dailogbox";
+import { AuthContext } from "../context/authcontext";
 import Cookies from "js-cookie";
 const Nav = () => {
   const { setState, setType } = useContext(DialogBoxContext);
+  const { deleteUser } = useContext(AuthContext);
   return (
     <nav>
       <Link to={"/"}>TestMe</Link>
@@ -23,8 +25,7 @@ const Nav = () => {
         ) : (
           <button
             onClick={() => {
-              Cookies.remove("user");
-              window.location.reload();
+              deleteUser();
             }}
           >
             logout

@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { DialogBoxContext } from "../context/dailogbox";
-import Cookies from "js-cookie";
+import { AuthContext } from "../context/authcontext";
 const Login = () => {
   const { setType, setState } = useContext(DialogBoxContext);
+  const { user, createUser } = useContext(AuthContext);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   useEffect(() => {
-    if (document.cookie) {
+    if (user.isLogged) {
       setState(false);
     }
   });
@@ -24,7 +25,7 @@ const Login = () => {
       .then((data) => {
         if (data.status === "success") {
           alert(data.message);
-          Cookies.set("user", data.token);
+          createUser(data.token);
           setState(false);
         } else {
           alert(data.message);
@@ -35,7 +36,7 @@ const Login = () => {
       });
   };
   return (
-    <div id="login">
+    <form id="login" onSubmit={handleLogin}>
       <h1>Login</h1>
       <input
         type="text"
@@ -59,9 +60,9 @@ const Login = () => {
         >
           register
         </button>
-        <button onClick={handleLogin}>Login</button>
+        <button type="submit">Login</button>
       </div>
-    </div>
+    </form>
   );
 };
 export default Login;

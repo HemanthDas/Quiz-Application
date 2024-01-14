@@ -1,5 +1,9 @@
-import { Link, Outlet } from "@tanstack/react-router";
+import React from "react";
+import { Link } from "@tanstack/react-router";
+
+import Cookies from "js-cookie";
 const Subject = () => {
+  const user = Cookies.get("user");
   const subjects = [
     { id: 1, name: "G.K" },
     { id: 2, name: "Biology" },
@@ -15,17 +19,25 @@ const Subject = () => {
       <article>
         {subjects.map((subject) => {
           return (
-            <Link
-              key={subject.id}
-              className="sub-names"
-              to={"/exam/" + subject.name}
-            >
-              <h1>{subject.name}</h1>
-            </Link>
+            <React.Fragment key={subject.id}>
+              {user ? (
+                <Link className="sub-names" to={"/exam/" + subject.name}>
+                  <h1>{subject.name}</h1>
+                </Link>
+              ) : (
+                <button
+                  className="sub-names"
+                  onClick={() => {
+                    alert("Please Login to continue");
+                  }}
+                >
+                  <h1>{subject.name}</h1>
+                </button>
+              )}
+            </React.Fragment>
           );
         })}
       </article>
-      <Outlet />
     </section>
   );
 };
