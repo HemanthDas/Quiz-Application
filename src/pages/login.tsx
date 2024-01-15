@@ -25,7 +25,6 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          console.log(data);
           alert(data.message);
           createUser(data.token);
           setState(false);

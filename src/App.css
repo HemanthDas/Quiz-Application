@@ -8,6 +8,7 @@ html {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 a {
   text-decoration: none;
@@ -63,7 +64,7 @@ a {
   footer {
     border-top: 2px solid var(--cl3);
     width: 100%;
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
   }
 }
@@ -231,6 +232,40 @@ button {
     }
   }
 }
-#exam{
+#exam {
   background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .question {
+    display: flex;
+    margin: 2rem;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    .options {
+      margin: 1rem;
+      font-size: 1.5rem;
+      > * {
+        padding: 1rem;
+        margin: 20px 0px;
+      }
+    }
+  }
+  button {
+    width: 20%;
+    height: 3rem;
+    border-radius: 1em;
+    margin-bottom: 1rem;
+    border: none;
+    outline: none;
+    background-color: var(--cl2);
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: center;
+  }
+}
+#result {
+  height: 100vh;
 }

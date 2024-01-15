@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import ExamQuestion from "./examQuestion";
+import hasher from "./hasher";
+import { AuthContext } from "../context/authcontext";
 interface Question {
   id: string;
   question: string;
@@ -12,8 +15,13 @@ interface QuizData {
 }
 
 const ExTest: React.FC<{ id: string }> = ({ id }) => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState<QuizData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedAnswers, setSelectedAnswers] = useState<{
+    [key: string]: string;
+  }>({});
 
   useEffect(() => {
     const getQuestions = async () => {
@@ -22,7 +30,6 @@ const ExTest: React.FC<{ id: string }> = ({ id }) => {
         const data: QuizData = await response.json();
         setQuestions(data);
         setLoading(false);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -31,28 +38,67 @@ const ExTest: React.FC<{ id: string }> = ({ id }) => {
     getQuestions();
   }, [id]);
 
+  const handleAnswerSelection = (
+    questionId: string,
+    selectedAnswer: string
+  ) => {
+    setSelectedAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [questionId]: selectedAnswer,
+    }));
+  };
+  const sendToDatabase = async ({ score }: { score: string }) => {
+    console.log(id);
+    const res = await fetch("http://localhost:3000/api/exam/result", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${user.user}`,
+      },
+      body: JSON.stringify({ score, subject: id }),
+    });
+    const data = await res.json();
+
+    alert(data.message);
+  };
+  const handleSubmit = () => {
+    const correctAnswersCount = questions?.questions.reduce((count, q) => {
+      const selectedAnswer = selectedAnswers[q.id];
+      return count + (selectedAnswer === q.correctAnswer ? 1 : 0);
+    }, 0);
+    const result =
+      ((correctAnswersCount ? correctAnswersCount : 0) /
+        questions!.questions.length) *
+      100;
+    alert(`Your score is ${result}%`);
+    sendToDatabase({ score: result.toString() });
+    navigate({
+      to: `/exam/${id}/result`,
+      replace: true,
+      search: { result: hasher(result.toString(), true) },
+    });
+  };
+
   return loading ? (
     <div>Hello</div>
   ) : (
-    <div>
+    <>
       {questions?.questions ? (
         questions.questions.map((q) => (
-          <div key={q.id}>
-            <h1>{q.question}</h1>
-            <div>
-              {q.answers.map((answer) => (
-                <div key={answer}>
-                  <input type="radio" name={q.id} id={answer} />
-                  <label htmlFor={answer}>{answer}</label>
-                </div>
-              ))}
-            </div>
+          <div key={q.id} className="question">
+            <ExamQuestion
+              q={q}
+              onAnswerSelect={(selectedAnswer) =>
+                handleAnswerSelection(q.id, selectedAnswer)
+              }
+            />
           </div>
         ))
       ) : (
         <div>No questions available</div>
       )}
-    </div>
+      <button onClick={handleSubmit}>Submit</button>
+    </>
   );
 };
 

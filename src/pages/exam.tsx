@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useContext } from "react";
 import { NavbarContext } from "../context/navbarcontext";
-import PreTest from "../components/exam.pretext";
+// import PreTest from "../components/exam.pretext";
 import ExTest from "../components/exam.extest";
 
 const Exam = () => {
@@ -13,9 +13,10 @@ const Exam = () => {
     if (isFullScreen) return;
     const enableFullscreen = async () => {
       try {
-        await document.getElementById("exam")?.requestFullscreen();
+        await document.body.requestFullscreen();
         setIsFullScreen(true);
       } catch (error) {
+        nohide();
         setIsFullScreen(false);
       }
     };
@@ -52,7 +53,7 @@ const Exam = () => {
 
   return (
     <div id="exam">
-      <PreTest id={route.id} />
+      {/* <PreTest id={route.id} /> */}
       <ExTest id={route.id} />
     </div>
   );
