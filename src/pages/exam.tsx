@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useContext } from "react";
 import { NavbarContext } from "../context/navbarcontext";
+import PreTest from "../components/exam.pretext";
+import ExTest from "../components/exam.extest";
 
 const Exam = () => {
   const route = useParams({ from: undefined, strict: true });
@@ -8,6 +10,7 @@ const Exam = () => {
   const { hide, nohide } = useContext(NavbarContext);
   const [isFullScreen, setIsFullScreen] = useState(false);
   useEffect(() => {
+    if (isFullScreen) return;
     const enableFullscreen = async () => {
       try {
         await document.getElementById("exam")?.requestFullscreen();
@@ -18,7 +21,12 @@ const Exam = () => {
     };
 
     enableFullscreen();
-
+    const disablef5 = (e: KeyboardEvent) => {
+      if (e.key === "F5") {
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("keydown", disablef5);
     const fullscreenChangeHandler = () => {
       if (document.fullscreenElement) {
         nohide();
@@ -33,32 +41,19 @@ const Exam = () => {
       alert("You have exited from full Exam is going to be submitted");
       navigate({ to: "/exam/$id/result", replace: true });
     };
-    window.addEventListener("beforeunload", (event) => {
-      event.preventDefault();
-      exitHandler();
-    });
-    document.addEventListener("fullscreenchange", fullscreenChangeHandler);
+
+    window.addEventListener("fullscreenchange", fullscreenChangeHandler);
+
     return () => {
-      document.removeEventListener("fullscreenchange", fullscreenChangeHandler);
+      window.removeEventListener("keydown", disablef5);
+      window.removeEventListener("fullscreenchange", fullscreenChangeHandler);
     };
-  }, [hide, navigate, nohide, route.id]);
+  }, [hide, navigate, nohide, isFullScreen]);
 
   return (
     <div id="exam">
-      {isFullScreen ? (
-        <>you are in full screen</>
-      ) : (
-        "you are not in full screen"
-      )}
-      {route.id}
-      <button
-        onClick={() => {
-          hide();
-          navigate({ to: "/exam/$id/result", replace: true });
-        }}
-      >
-        Done
-      </button>
+      <PreTest id={route.id} />
+      <ExTest id={route.id} />
     </div>
   );
 };

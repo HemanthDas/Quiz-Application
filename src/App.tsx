@@ -3,7 +3,6 @@ import Modal from "./components/modal";
 import NavbarProvider from "./context/navbarcontext";
 import Footer from "./components/footer";
 import { Outlet } from "@tanstack/react-router";
-
 import { useContext } from "react";
 import AuthProvider from "./context/authcontext";
 
