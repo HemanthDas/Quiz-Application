@@ -3,11 +3,12 @@ import { DialogBoxContext } from "../context/dailogbox.tsx";
 
 import Login from "../pages/login.tsx";
 import Register from "../pages/register.tsx";
+import MessageDaialog from "./messagedailog.tsx";
 
 function ModelType({ type }: { readonly type: number }) {
   if (type === 1) return <Login />;
   if (type === 2) return <Register />;
-  if (type === 3) return <div className="top">Modal 3</div>;
+  if (type === 3) return <MessageDaialog />;
 }
 
 const MemoizedModelType = React.memo(ModelType);

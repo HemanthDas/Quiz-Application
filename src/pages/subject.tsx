@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
-
 import Cookies from "js-cookie";
 const Subject = () => {
   const user = Cookies.get("user");
   const [subjects, setSubjects] = React.useState<{ name: string }[]>([]);
   const [loading, setLoading] = React.useState(true);
-  // const [error, setError] = React.useState(false);
   useEffect(() => {
     const getSubjects = async () => {
       try {
@@ -23,7 +21,6 @@ const Subject = () => {
         alert((error as Error).message);
         setSubjects([]);
         setLoading(false);
-        // setError(true);
       }
     };
 
@@ -41,7 +38,11 @@ const Subject = () => {
             return (
               <React.Fragment key={subject.name}>
                 {user ? (
-                  <Link className="sub-names" to={"/exam/" + subject.name}>
+                  <Link
+                    className="sub-names"
+                    to={"/exam/" + subject.name}
+                    search={{ type: "subject" }}
+                  >
                     <h1>{subject.name}</h1>
                   </Link>
                 ) : (

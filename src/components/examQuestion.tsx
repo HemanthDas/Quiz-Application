@@ -16,7 +16,6 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({ q, onAnswerSelect }) => {
   const handleAnswerSelection = (selectedAnswer: string) => {
     onAnswerSelect(selectedAnswer);
   };
-
   return (
     <>
       <h1>{q.question}</h1>

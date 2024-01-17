@@ -14,7 +14,7 @@ interface QuizData {
   questions: Question[];
 }
 
-const ExTest: React.FC<{ id: string }> = ({ id }) => {
+const ExTest: React.FC<{ id: string; type: string }> = ({ id, type }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [questions, setQuestions] = useState<QuizData | null>(null);
@@ -26,9 +26,12 @@ const ExTest: React.FC<{ id: string }> = ({ id }) => {
   useEffect(() => {
     const getQuestions = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/exam/${id}`);
+        const response = await fetch(
+          `http://localhost:3000/api/exam/${type}/${id}`
+        );
         const data: QuizData = await response.json();
         setQuestions(data);
+
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -48,7 +51,6 @@ const ExTest: React.FC<{ id: string }> = ({ id }) => {
     }));
   };
   const sendToDatabase = async ({ score }: { score: string }) => {
-    console.log(id);
     const res = await fetch("http://localhost:3000/api/exam/result", {
       method: "PUT",
       headers: {
@@ -62,6 +64,7 @@ const ExTest: React.FC<{ id: string }> = ({ id }) => {
     alert(data.message);
   };
   const handleSubmit = () => {
+    localStorage.setItem("ex-status", "end");
     const correctAnswersCount = questions?.questions.reduce((count, q) => {
       const selectedAnswer = selectedAnswers[q.id];
       return count + (selectedAnswer === q.correctAnswer ? 1 : 0);

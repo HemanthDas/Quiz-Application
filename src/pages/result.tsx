@@ -7,7 +7,7 @@ const Result = () => {
   const result = hasher(search.result, false);
   return (
     <div id="result">
-      <h1>{route.id}</h1>
+      <h1>{route.id}:</h1>
       <h1>{result}</h1>
     </div>
   );

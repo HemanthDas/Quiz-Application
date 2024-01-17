@@ -64,7 +64,6 @@ a {
   footer {
     border-top: 2px solid var(--cl3);
     width: 100%;
-    /* position: absolute; */
     bottom: 0;
   }
 }
@@ -234,6 +233,7 @@ button {
 }
 #exam {
   background-color: white;
+  overflow: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -266,6 +266,18 @@ button {
     align-self: center;
   }
 }
-#result {
-  height: 100vh;
+main:fullscreen {
+  overflow: auto !important;
+  flex-wrap: wrap;
 }
+#result {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+}
+/* main {
+  background-image: url("./assets/bg1.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+} */
