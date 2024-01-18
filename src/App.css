@@ -275,9 +275,9 @@ main:fullscreen {
   display: flex;
   align-items: center;
 }
-/* main {
+main {
   background-image: url("./assets/bg1.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-} */
+}

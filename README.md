@@ -1,30 +1,42 @@
-# React + TypeScript + Vite
+# Quiz Application - Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the front-end repository of my Quiz Application project! 🚀 This application is built using React for the user interface.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User-Friendly Interface:** Intuitive and responsive UI for an enjoyable user experience.
+- **Full-Stack Development:** This front-end interacts seamlessly with the back-end, showcasing a full-stack application.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To run this front-end locally, follow these steps:
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the repository:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+   ```bash
+   git clone https://github.com/HemanthDas/Quiz-Application
+   ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Navigate to the client folder:
+
+   ```bash
+   cd Quiz-Application
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the front-end:
+
+   ```bash
+   npm start
+   ```
+
+5. Open your browser and visit `http://localhost:5173` to view the application.
+
+## Contributing
+
+Feel free to contribute by opening issues or submitting pull requests. Your feedback and suggestions are highly appreciated.
